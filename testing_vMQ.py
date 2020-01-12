@@ -54,12 +54,13 @@ class Garb: #most basic info for each piece of clothing
         
     def wear(self): #each time clothing used
         self.worn += 1 
-        curDate = datetime.date(datetime.now()) #uses real time date of update
-        self.lastWorn = curDate #changes to new wear date
+        #uses real time date of update
+        self.lastWorn = datetime.now() #changes to new wear date
 
     def wearGap(self): #must pass in datetime obj
-        #gap = day - self.lastWorn
-        return abs((datetime.date(datetime.now()) - self.lastWorn).days) #difference in whole day value
+        type(self.lastWorn)
+        gap = (datetime.now() - self.lastWorn)
+        return abs(gap.days) #difference in whole day value
 
     def per(self): #price per wear
         if self.worn == 0:
@@ -90,11 +91,11 @@ def addGarb():
             print("Alright, back to main menu?\n")
             input()
             break #ends loop 
-
+"""
 def garbStats(ind): #statistics for a specific piece of clothing
     global closet
-    return (closet[ind-1].wearGap, closet[ind-1].per) #days since last worn and cost/wear "efficiency" in a tuple
-
+    return [closet[ind-1].wearGap, closet[ind-1].per] #days since last worn and cost/wear "efficiency" in a tuple
+"""
 def search(term): #pass in user entry and compare to clothing names in closet
     global closet
     match = []
@@ -113,7 +114,8 @@ def browse(): #edit/update entries
         if n == -1: #"back button" to main menu
             break
         else:
-            closet[n].wear() #"clicking wear button" at different places changes wore counter, lastWorn
+            closet[n-1].wear() #"clicking wear button" at different places changes wore counter, lastWorn
+            print(n, closet[n-1].getInfo(), sep = ". ", end = "\n")
         
 
 
@@ -146,10 +148,12 @@ while True:
         input() #enter to return to menu
         
     elif choice == "4": #statistics and other fun stuff
-        print("I'm sorry, this function is only partially complete. Check back later!\n")
+        print("I'm sorry, this function is only partially complete. Check back later!\n" +
+              "Enter the index of the item you wish to analyse.\n")
         #choice of specific garment OR general stats somehow, not yet
         ind = int(input())
-        print(garbStats(ind)[0], garbStats(ind)[1], sep = " ")
+        print(f"It has been {closet[ind-1].wearGap()} day(s) since you last wore this.\n" +
+              f"The cost per wear of this item is ${closet[ind-1].per()}.\n")
         
     elif choice == "5": #end the application
         print("So sad to see you go...Update me next time! :)))\n")
