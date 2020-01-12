@@ -44,6 +44,8 @@ class Garb: #most basic info for each piece of clothing
     def wear(self): #each time clothing used
 
         self.worn += 1 #default, might include user input
+        #get date, compare to next wear
+        #alert if not worn for x amount of time
 
     def per(self): #price per wear
 
@@ -75,6 +77,14 @@ def addGarb():
             print("Alright, back to main menu?\n")
             input()
             running = False
+
+def garbStats(ind): #statistics for a specific piece of clothing
+    global closet
+
+    item = closet[ind]
+    #how many times worn in past month/year?
+    #cost/wear "efficiency"
+    
     
 
 print("=====WELCOME TO YOUR VIRTUAL CLOSET=====\n")
@@ -105,6 +115,7 @@ while running:
         
     elif choice == "4": #statistics and other fun stuff
         print("I'm sorry, that function has not been completed yet. Please try again later!\n")
+        #choice of specific garment OR general stats
 
     elif choice == "5": #end the application
         print("So sad to see you go...Update me next time! :)))\n")
