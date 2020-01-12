@@ -16,12 +16,15 @@ bottom (shorts, pants, skirts)
 shoe (sneaker, boot, heel, sandal)
 accessory (hat, jewellery, glasses, bag)
 
-adding date components 
+adding date components ?
 
 """
 
-options = ["1. add an item!", "2. search for an item", "3. browse your closet", "4. view statistics", "5. terminate me"]
-closet = [] #append clothes to this 
+options = ["1. add an item!", "2. search for an item",
+           "3. browse your closet", "4. view statistics",
+           "5. terminate me"]
+
+closet = [] #master list of all clothes
 
 
 class Garb: #most basic info for each piece of clothing
@@ -36,7 +39,7 @@ class Garb: #most basic info for each piece of clothing
         
     def getInfo(self): #summary of all factors
 
-        print(f"you paid ${self.price} for this {self.cat} on {self.date}.")
+        return (f"you paid ${self.price} for {self.cat} on {self.date}.") #easier string formatting
         
     def wear(self): #each time clothing used
 
@@ -69,7 +72,8 @@ def addGarb():
         if choice == "y":
             print("OK, no problem!\n")
         elif choice == "n":
-            print("Alright, back to main menu.\n")
+            print("Alright, back to main menu?\n")
+            input()
             running = False
     
 
@@ -77,13 +81,15 @@ print("=====WELCOME TO YOUR VIRTUAL CLOSET=====\n")
 "short introduction/mission statement I guess"
 
 #menu loop
+running = True
 
-while True:
+while running:
     
     print(*options, sep = "\n")
     choice = str(input())
 
     #integrate into GUI later
+    #maybe list of relevant functions where int points to location to call
     if choice == "1": #adding items to closet
        addGarb() 
         
@@ -93,14 +99,16 @@ while True:
     elif choice == "3":
         if len(closet) != 0:
             for c in closet:
-                c.getInfo()
+                print(str(closet.index(c) + 1), c.getInfo(), sep = ". ", end = "\n")
+        print("Alright, back to main menu?\n")
+        input() #enter to return to menu
         
     elif choice == "4": #statistics and other fun stuff
         print("I'm sorry, that function has not been completed yet. Please try again later!\n")
 
     elif choice == "5": #end the application
         print("So sad to see you go...Update me next time! :)))\n")
-        quit()
+        running = False
     
     else: #improper input
         print("I'm sorry, that didn't make sense. Please enter a proper option.\n")
