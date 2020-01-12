@@ -18,6 +18,18 @@ simple strings as names, linear search, no tagging
 
 adding date components ???
 
+
+catchy name:
+===========
+laundry list
+Pydrobe
+Worth the Wear/Ware
+object-oriented outfitting
+<start> New Thread
+the conscious closet
+tag: stretch the wear-time, not your budget
+
+
 """
 
 options = ["1. add an item!", "2. search for an item",
@@ -95,7 +107,7 @@ def browse(): #edit/update entries
             print(str(closet.index(c) + 1), c.getInfo(), sep = ". ", end = "\n")
     while True:
         n = int(input())
-        if n = -1:
+        if n = -1: #"back button" to main menu
             break
         else:
             closet[].wear(n) #"clicking wear button" at different places changes wore counter, lastWorn
