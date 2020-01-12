@@ -57,9 +57,9 @@ class Garb: #most basic info for each piece of clothing
         curDate = datetime.date(datetime.now()) #uses real time date of update
         self.lastWorn = curDate #changes to new wear date
 
-    def wearGap(day): #must pass in datetime obj
-        wearGap = datetime.strptime(day, "%Y-%m-%d") - datetime.strptime(self.lastWorn, "%Y-%m-%d") 
-        return wearGap.days #difference in whole day value
+    def wearGap(self): #must pass in datetime obj
+        #gap = day - self.lastWorn
+        return abs((datetime.date(datetime.now()) - self.lastWorn).days) #difference in whole day value
 
     def per(self): #price per wear
         if self.worn == 0:
@@ -93,8 +93,7 @@ def addGarb():
 
 def garbStats(ind): #statistics for a specific piece of clothing
     global closet
-    item = closet[ind]
-    return (item.wearGap, item.per) #days since last worn and cost/wear "efficiency" in a tuple
+    return (closet[ind-1].wearGap, closet[ind-1].per) #days since last worn and cost/wear "efficiency" in a tuple
 
 def search(term): #pass in user entry and compare to clothing names in closet
     global closet
@@ -149,7 +148,8 @@ while True:
     elif choice == "4": #statistics and other fun stuff
         print("I'm sorry, this function is only partially complete. Check back later!\n")
         #choice of specific garment OR general stats somehow, not yet
-        print(garbStats(int(input())))
+        ind = int(input())
+        print(garbStats(ind)[0], garbStats(ind)[1], sep = " ")
         
     elif choice == "5": #end the application
         print("So sad to see you go...Update me next time! :)))\n")
