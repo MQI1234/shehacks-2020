@@ -7,7 +7,9 @@
 from tkinter import *
 from tkinter.ttk import *
 
-from datetime import datetime 
+from datetime import datetime
+
+import pickle
 
 """
 CONSIDER
@@ -26,7 +28,7 @@ Pydrobe
 Worth the Wear/Ware
 object-oriented outfitting
 <start> New Thread
-the conscious closet
+the conscious closet (tm)
 tag: stretch the wear-time, not your budget
 
 
@@ -37,16 +39,15 @@ options = ["1. add an item!", "2. search for an item",
            "5. terminate me"]
 
 closet = [] #master list of all clothes
-
-
+    
 class Garb: #most basic info for each piece of clothing
     global closet
     def __init__(self, price, cat, date): #figure out obj types
         self.price = price
         self.cat = cat
-        self.date = date
+        #self.date = date
         self.worn = 0 #default for new purchases
-        self.lastWorn = datetime.date(datetime.now())
+        self.lastWorn = date #sauce in current date i guess
         
     def getInfo(self): #summary of all factors
         return (f"you paid ${self.price} for {self.cat} and last wore it on {self.lastWorn}.") #easier string formatting
@@ -65,7 +66,10 @@ class Garb: #most basic info for each piece of clothing
             return "Item has not been used yet, please come back when you wear it! :)"
         return round((self.price/self.worn), 2) #decimal standard for dollar amt
 
-
+def save_obj(obj, file): #closet data will be preserved in a file 
+    with open(file, 'wb') as out:
+        pickle.dump(obj, out, pickle.HIGHEST_PROTOCOL)
+        
 def addGarb():
     global closet
     while True:
@@ -74,9 +78,9 @@ def addGarb():
         p = float(input())
         print("What type of clothing is this?\n")
         c = str(input())
-        print("When did you buy this item?" + "(YYYY-MM-DD)\n") #add option for "today" in system time???
+        print("When did you wear this item?" + "(YYYY-MM-DD)\n") #add option for "today" in system time???
         d = str(input())
-        closet.append(Garb(p, c, d)) #adds new item to master closet
+        closet.append(Garb(p, c, datetime.strptime(d, "%Y-%m-%d"))) #adds new item to master closet
         
         print("Would you like to add another item? (y/n) \n")
         choice = str(input())
@@ -107,15 +111,18 @@ def browse(): #edit/update entries
             print(str(closet.index(c) + 1), c.getInfo(), sep = ". ", end = "\n")
     while True:
         n = int(input())
-        if n = -1: #"back button" to main menu
+        if n == -1: #"back button" to main menu
             break
         else:
-            closet[].wear(n) #"clicking wear button" at different places changes wore counter, lastWorn
+            closet[n].wear() #"clicking wear button" at different places changes wore counter, lastWorn
         
 
 
 print("=====WELCOME TO YOUR VIRTUAL CLOSET=====\n")
 "short introduction/mission statement I guess"
+
+with open('closet_data.pkl', 'rb') as inp: 
+    closet = pickle.load(inp)
 
 #menu loop
 
@@ -142,17 +149,20 @@ while True:
     elif choice == "4": #statistics and other fun stuff
         print("I'm sorry, this function is only partially complete. Check back later!\n")
         #choice of specific garment OR general stats somehow, not yet
-        garbStats(int(input()))
+        print(garbStats(int(input())))
         
     elif choice == "5": #end the application
         print("So sad to see you go...Update me next time! :)))\n")
+
         break
     
     else: #improper input
         print("I'm sorry, that didn't make sense. Please enter a proper option.\n")
     
+
+#IDEALLY: preserve and output the closet (data integrity between sessions) 
+save_obj(closet, 'closet_data.pkl')
     
-        
     
 
     

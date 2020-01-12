@@ -1,22 +1,21 @@
 #an attempt
+#testingvMQ.py
+#Mengyu's version
 
-from datetime import datetime
+
+from tkinter import *
+from tkinter.ttk import *
+
+from datetime import datetime 
 
 """
 CONSIDER
 
 representing types of clothing
 =================
-append into array and track that way? 
+simple strings as names, linear search, no tagging
 
-[subject to change]
-multiples in each category?
-top (short, long, casual, dressy)
-bottom (shorts, pants, skirts)
-shoe (sneaker, boot, heel, sandal)
-accessory (hat, jewellery, glasses, bag)
-
-adding date components ?
+adding date components ???
 
 """
 
@@ -37,6 +36,9 @@ class Garb: #most basic info for each piece of clothing
         self.date = date
         self.worn = 0 #default for new purchases
         
+    #def getCat(self):
+
+        #return self.cat
     def getInfo(self): #summary of all factors
 
         return (f"you paid ${self.price} for {self.cat} on {self.date}.") #easier string formatting
@@ -82,8 +84,18 @@ def garbStats(ind): #statistics for a specific piece of clothing
     global closet
 
     item = closet[ind]
+    
     #how many times worn in past month/year?
     #cost/wear "efficiency"
+
+def search(term): #pass in user entry and compare to clothing names in closet
+    global closet
+
+    match = []
+    for c in closet:
+        if term in c.cat: #true if item name contains substring user enters
+            match.append(c) 
+    return match #array of possible matches to display
     
     
 
@@ -99,13 +111,15 @@ while running:
     choice = str(input())
 
     #integrate into GUI later
-    #maybe list of relevant functions where int points to location to call
+    
     if choice == "1": #adding items to closet
        addGarb() 
         
     elif choice == "2": #searching for an item
-        print("I'm sorry, that function has not been completed yet. Please try again later!\n")
-
+        print("please enter the item you wish to search")
+        for r in (search(str(input()))):
+            print(r.cat) 
+                        
     elif choice == "3":
         if len(closet) != 0:
             for c in closet:
@@ -116,6 +130,7 @@ while running:
     elif choice == "4": #statistics and other fun stuff
         print("I'm sorry, that function has not been completed yet. Please try again later!\n")
         #choice of specific garment OR general stats
+        #0 for overall stats, index for certain item
 
     elif choice == "5": #end the application
         print("So sad to see you go...Update me next time! :)))\n")
